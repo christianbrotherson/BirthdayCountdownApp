@@ -9,6 +9,9 @@ class Clock extends Component {
     this.timer = 0;
     this.birthday = props.birthdayFormState.startDate.toString();
     this.getTimeRemaining = this.getTimeRemaining.bind(this);
+    this.getAge = this.getAge.bind(this);
+    this.renderMessage = this.renderMessage.bind(this);
+    this.noBirthYear = new Date(this.birthday).getFullYear() != new Date().getFullYear();
     
     this.state = {
       timeRemaining: this.getTimeRemaining(this.props.birthdayFormState.startDate.toString())
@@ -27,7 +30,7 @@ class Clock extends Component {
     const currentMonth = today.getMonth();
     const birthMonth = bday.getMonth();
 
-    if(birthMonth > currentMonth) {
+    if (birthMonth > currentMonth) {
       bday.setFullYear(today.getFullYear());
     }
     else if (birthMonth < currentMonth) {
@@ -40,8 +43,11 @@ class Clock extends Component {
       if (birthDay > currentDay) {
         bday.setFullYear(today.getFullYear());
       }
-      else {
+      else if (birthDay < currentDay) {
         bday.setFullYear(today.getFullYear() + 1);
+      }
+      else if (birthDay == currentDay) {
+        return 0
       }
     }
 
@@ -67,24 +73,6 @@ class Clock extends Component {
     var daysOld = Math.floor(distance / (1000 * 60 * 60 * 24));
     var yearsOld = Number(Math.ceil(daysOld/365).toFixed(0));
     return yearsOld
-  }.bind(this)
-  
-  render() {
-    const data = this.state.timeRemaining
-    
-    return(
-      <div>
-        <div>
-          <div>DAYS {data.days}</div>
-          <div>HRS {data.hours}</div>
-          <div>MINS {data.minutes}</div>
-          <div>SECS {data.seconds}</div>
-        </div>
-        <div>
-          {<h4>remaining until you are {this.getAge()}</h4>}
-        </div>
-      </div>
-    )
   }
 
   componentDidMount() {
@@ -99,6 +87,42 @@ class Clock extends Component {
     clearInterval(this.timer);
     
   }
+  
+  renderMessage = function() {
+    if(this.noBirthYear) {
+      return (
+        <h4>until your birthday</h4 >
+      )
+    }
+  }
+  
+  render() {
+    const data = this.state.timeRemaining
+    
+    return(
+      <div>
+        {
+          this.state.timeRemaining == 0 ? 
+            <div>
+              <h1>HAPPY BIRTHDAY</h1>
+            </div>
+          :
+            <div>
+              <div>
+                <div>DAYS {data.days}</div>
+                <div>HRS {data.hours}</div>
+                <div>MINS {data.minutes}</div>
+                <div>SECS {data.seconds}</div>
+              </div>
+              <div>
+                {this.renderMessage()}
+              </div>
+            </div>
+        }
+      </div>
+    )
+  }
+
 }
 
 export default Clock;
