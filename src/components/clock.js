@@ -16,9 +16,34 @@ class Clock extends Component {
     
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(`next props: ${JSON.stringify(nextProps)}`);
+  }
+
   getTimeRemaining(birthday) {
     var bday = new Date(birthday);
-    let today = new Date();
+    var today = new Date();
+
+    const currentMonth = today.getMonth();
+    const birthMonth = bday.getMonth();
+
+    if(birthMonth > currentMonth) {
+      bday.setFullYear(today.getFullYear());
+    }
+    else if (birthMonth < currentMonth) {
+      bday.setFullYear(today.getFullYear() + 1);
+    }
+    else if (birthMonth == currentMonth) {
+      const birthDay = bday.getDate();
+      const currentDay = today.getDate();
+
+      if (birthDay > currentDay) {
+        bday.setFullYear(today.getFullYear());
+      }
+      else {
+        bday.setFullYear(today.getFullYear() + 1);
+      }
+    }
 
     var distance = bday.getTime() - today.getTime();
 
@@ -40,7 +65,7 @@ class Clock extends Component {
     let today = new Date();
     var distance = today.getTime() - bday.getTime();
     var daysOld = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var yearsOld = Number((daysOld/365).toFixed(0));
+    var yearsOld = Number(Math.ceil(daysOld/365).toFixed(0));
     return yearsOld
   }.bind(this)
   
@@ -67,6 +92,12 @@ class Clock extends Component {
       const timeRemaining = this.getTimeRemaining(this.birthday)
       this.setState({ timeRemaining: timeRemaining })
     }, 1000)
+  }
+
+  componentWillUnmount() {
+    console.log('trying to unmount CLOCK component');
+    clearInterval(this.timer);
+    
   }
 }
 
