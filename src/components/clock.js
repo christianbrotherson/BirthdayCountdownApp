@@ -11,7 +11,7 @@ class Clock extends Component {
     this.getTimeRemaining = this.getTimeRemaining.bind(this);
     this.getAge = this.getAge.bind(this);
     this.renderMessage = this.renderMessage.bind(this);
-    this.noBirthYear = new Date(this.birthday).getFullYear() != new Date().getFullYear();
+    this.noBirthYear = new Date(this.birthday).getFullYear() == new Date().getFullYear();
     
     this.state = {
       timeRemaining: this.getTimeRemaining(this.props.birthdayFormState.startDate.toString())
@@ -100,7 +100,7 @@ class Clock extends Component {
     const data = this.state.timeRemaining
     
     return(
-      <div>
+      <div className='countdown'>
         {
           this.state.timeRemaining == 0 ? 
             <div>
@@ -109,10 +109,12 @@ class Clock extends Component {
           :
             <div>
               <div>
-                <div>DAYS {data.days}</div>
-                <div>HRS {data.hours}</div>
-                <div>MINS {data.minutes}</div>
-                <div>SECS {data.seconds}</div>
+                <ul>
+                  <li><p>DAYS {data.days}</p></li>
+                  <li><p>HRS {data.hours}</p></li>
+                  <li><p>MINS {data.minutes}</p></li>
+                  <li><p>SECS {data.seconds}</p></li>
+                </ul>
               </div>
               <div>
                 {this.renderMessage()}
