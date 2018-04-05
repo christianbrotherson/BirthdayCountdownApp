@@ -94,22 +94,27 @@ class Clock extends Component {
         <h4>until your birthday</h4 >
       )
     }
+    return (
+      <h4>remaining until you are {this.getAge()}</h4>
+    )
   }
   
   render() {
     const data = this.state.timeRemaining
     
     return(
-      <div className='countdown'>
+      <div >
         {
           this.state.timeRemaining == 0 ? 
-            <div className="message-container">
-              <p className="message-container-title">Countdown Complete</p>
-              <p className="message-container-message">HAPPY BIRTHDAY</p>
+            <div className='countdown'>
+              <div className="message-container">
+                <p className="message-container-title">Countdown Complete</p>
+                <p className="message-container-message">HAPPY BIRTHDAY</p>
+              </div>
             </div>
           :
             <div>
-              <div>
+              <div className='countdown'>
                 <ul className="countdown-clock">
                   <li>DAYS<p> {data.days}</p></li>
                   <li>HRS<p> {data.hours}</p></li>
@@ -117,7 +122,7 @@ class Clock extends Component {
                   <li>SECS<p> {data.seconds}</p></li>
                 </ul>
               </div>
-              <div>
+              <div className="until-container">
                 {this.renderMessage()}
               </div>
             </div>
