@@ -111,10 +111,10 @@ class Clock extends Component {
             <div>
               <div>
                 <ul className="countdown-clock">
-                  <li><p>DAYS {data.days}</p></li>
-                  <li><p>HRS {data.hours}</p></li>
-                  <li><p>MINS {data.minutes}</p></li>
-                  <li><p>SECS {data.seconds}</p></li>
+                  <li>DAYS<p> {data.days}</p></li>
+                  <li>HRS<p> {data.hours}</p></li>
+                  <li>MINS<p> {data.minutes}</p></li>
+                  <li>SECS<p> {data.seconds}</p></li>
                 </ul>
               </div>
               <div>
