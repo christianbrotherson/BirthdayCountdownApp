@@ -1,0 +1,15 @@
+.birthday-container {
+  @include center-item;
+}
+
+.date-picker-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.clock-container {
+  width: 100vw;
+  height: 100vh;
+}
